@@ -1,0 +1,56 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ animeDetalle.title }}</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <!-- Imagen del anime -->
+    <div class="anime-image-container">
+      <img class="anime-image" [src]="animeDetalle.imagenUrl" alt="Imagen de {{ animeDetalle.title }}">
+    </div>
+
+    <!-- Detalles del anime -->
+    <div class="anime-details">
+      <p class="anime-description">{{ animeDetalle.description }}</p>
+      
+      <p><strong>Géneros:</strong> {{ animeDetalle.genres.join(', ') }}</p>
+      <p><strong>Status:</strong> {{ animeDetalle.status }}</p>
+      <p><strong>Votos:</strong> {{ animeDetalle.votes }}</p>
+    </div>
+
+    <!-- Campo de entrada y botón -->
+    <div class="input-button-container-center">
+      <mat-form-field class="example-user-input">
+        <mat-label>Episodio</mat-label>
+        <input matInput type="number" [formControl]="showDelay" aria-label="Ingresa número de episodio">
+        <mat-hint>Ingresa número de episodio</mat-hint>
+        <mat-error *ngIf="showDelay.hasError('min')">
+          No se permiten números negativos.
+        </mat-error>
+      </mat-form-field>
+      
+      <button mat-raised-button 
+              matTooltip="Obtener links" 
+              [matTooltipShowDelay]="showDelay.value"
+              aria-label="Botón para obtener links" 
+              (click)="getLinks()">
+        Obtener Links
+      </button>
+    </div>
+
+    <!-- Lista dinámica de links obtenidos -->
+    <div *ngIf="listLinks.length > 0">
+      <h3>Links de Episodio:</h3>
+      <mat-list role="list">
+        <mat-list-item role="listitem" *ngFor="let link of listLinks">
+          <a [href]="link" target="_blank">{{ link }}</a>
+        </mat-list-item>
+      </mat-list>
+    </div>
+
+    <!-- Mensaje si no hay links -->
+    <div *ngIf="listLinks.length === 0">
+      <p>Links...</p>
+    </div>
+  </mat-card-content>
+</mat-card>
