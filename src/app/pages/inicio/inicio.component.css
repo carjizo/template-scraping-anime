@@ -30,3 +30,16 @@
      color: #1e40af;
      text-decoration: underline;
 }
+
+.anime-list {
+     display: grid;
+     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+     gap: 20px;
+   }
+   
+   mat-card {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: space-between;
+   }
