@@ -4,10 +4,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
      // debugger;
      if(req.url.indexOf("auth") > 0)  return next(req);
 
-     const jwt = localStorage.getItem("jwt");
+     const token = localStorage.getItem("token");
      const clonRequest = req.clone({
           setHeaders:{
-               Authorization: `Bearer ${jwt}`
+               Authorization: `Bearer ${token}`
           }
      })
      return next(clonRequest);

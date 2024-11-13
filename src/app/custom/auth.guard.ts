@@ -5,15 +5,15 @@ import { catchError, map, of } from 'rxjs';
 
 export const authGuard: CanActivateFn = (route, state) => {
      // debugger;
-     const jwt = localStorage.getItem("jwt") || "";
+     const token = localStorage.getItem("token") || "";
      const router = inject(Router);
 
      const accesoService = inject(AccesoService)
-     if(jwt != ""){
+     if(token != ""){
           // return true;
-          return accesoService.validarToken(jwt).pipe(
+          return accesoService.validarToken(token).pipe(
                map(data => {
-                    if(data){
+                    if(data.isSucces == true){
                          return true
                     } else{
                          router.navigate([''])

@@ -4,10 +4,12 @@ import { AccesoService } from '../../services/acceso.service';
 import { Router } from '@angular/router';
 import { Register } from '../../interfaces/Register';
 
+import { MatDialog} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import { ErrorDialogComponent } from '../error_dialog/error-dialog.component';
 
 
 
@@ -23,6 +25,7 @@ export class RegistroComponent {
      private accesoService = inject(AccesoService);
      private router = inject(Router);
      public formBuild = inject(FormBuilder);
+     private dialog = inject(MatDialog);
 
      public formRegistro: FormGroup = this.formBuild.group({
           idIdent: ['',Validators.required],
@@ -43,13 +46,15 @@ export class RegistroComponent {
 
           this.accesoService.registrarse(objeto).subscribe({
                next: (data) =>{
-                    if(data){
+                    if(data.isSucces == true){
                          this.router.navigate([''])
                     }else{
-                         alert("No se pudo registrar")
+                         // alert(data.message)
+                         this.openErrorDialog(data.message);
                     }
                }, error:(error) =>{
-                    console.log(error.message);
+                    // console.log(error.message);
+                    this.openErrorDialog('Error al registrarse: ' + error.message);
                }
           })
 
@@ -58,5 +63,11 @@ export class RegistroComponent {
      volver(){
           this.router.navigate([''])
      }
+
+     openErrorDialog(message: string): void {
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message },
+          });
+        }
 
 }

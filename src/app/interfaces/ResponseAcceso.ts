@@ -1,4 +1,5 @@
 export interface ResponseAcceso{
-     // isSuccess:boolean,
-     jwt:string
+     isSucces:boolean,
+     token:string,
+     message:string
 }

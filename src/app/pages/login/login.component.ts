@@ -3,7 +3,9 @@ import { AccesoService } from '../../services/acceso.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../interfaces/Login';
+import { ErrorDialogComponent } from '../error_dialog/error-dialog.component';
 
+import { MatDialog} from '@angular/material/dialog';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -21,6 +23,7 @@ export class LoginComponent {
      private accesoService = inject(AccesoService);
      private router = inject(Router);
      public formBuild = inject(FormBuilder);
+     private dialog = inject(MatDialog);
 
      public formLogin: FormGroup = this.formBuild.group({
           idIdent: ['',Validators.required],
@@ -37,20 +40,28 @@ export class LoginComponent {
        
           this.accesoService.login(objeto).subscribe({
                next:(data) =>{
-                    if(data){
-                         localStorage.setItem("jwt",data.jwt)
+                    if(data.isSucces == true){
+                         localStorage.setItem("token",data.token)
                          this.router.navigate(['inicio'])
                     }else{
-                         alert("Credenciales son incorrectas")
+                         this.openErrorDialog(data.message);
+                         // alert(data.message)
                     }
                },
                error:(error) =>{
-                    console.log(error.message);
+                    // console.log(error.message);
+                    this.openErrorDialog('Error al registrarse: ' + error.message);
                }
           })
      }
 
      registrarse(){
           this.router.navigate(['registro'])
+     }
+
+     openErrorDialog(message: string): void {
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message },
+          });
      }
 }

@@ -10,7 +10,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatListModule} from '@angular/material/list';
+import { ErrorDialogComponent } from '../error_dialog/error-dialog.component';
 
+import { MatDialog} from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { AnimeService } from '../../services/anime.service';
 import { AnimeDetalle } from '../../interfaces/AnimeDetalle';
@@ -54,6 +56,7 @@ export class DetalleComponent implements OnInit {
           status: '',
           votes: ''
      };
+     private dialog = inject(MatDialog);
 
      animeId: string | null = null;
 
@@ -88,13 +91,22 @@ export class DetalleComponent implements OnInit {
 
           this.responseAnimeSearch.getLinks(objeto).subscribe({
                next: (data) => {
-                    if (data) {
-                         this.listLinks = data;
+                    if (data.isSucces == true) {
+                         this.listLinks = data.links;
+                    } else {
+                         this.openErrorDialog(data.message);
                     }
                },
                error: (err) => {
-                    console.log(err.message);
+                    // console.log(err.message);
+                    this.openErrorDialog('Error al registrarse: ' + err.message);
                }
           })
+     }
+
+     openErrorDialog(message: string): void {
+          this.dialog.open(ErrorDialogComponent, {
+            data: { message },
+          });
      }
 }

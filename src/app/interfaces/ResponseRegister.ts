@@ -1,6 +1,4 @@
 export interface ResponseRegister{
-    idIdent: string,
-    role: string,
-    password: string,
-    status: boolean
+    isSucces: boolean,
+    message: string
 }

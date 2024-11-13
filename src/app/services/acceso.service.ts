@@ -7,6 +7,7 @@ import { ResponseAcceso } from '../interfaces/ResponseAcceso';
 import { Login } from '../interfaces/Login';
 import { ResponseRegister } from '../interfaces/ResponseRegister';
 import { Register } from '../interfaces/Register';
+import { ResponseValidateToken } from '../interfaces/ResponseValidateToken';
 
 @Injectable({
      providedIn: 'root'
@@ -26,7 +27,7 @@ export class AccesoService {
           return this.http.post<ResponseAcceso>(`${this.baseUrl}/auth/login`, objeto)
      }
 
-     validarToken(jwt: string): Observable<ResponseAcceso> {
-          return this.http.get<ResponseAcceso>(`${this.baseUrl}/auth/validate-token/${jwt}`)
+     validarToken(token: string): Observable<ResponseValidateToken> {
+          return this.http.get<ResponseValidateToken>(`${this.baseUrl}/auth/validate-token/${token}`)
      }
 }

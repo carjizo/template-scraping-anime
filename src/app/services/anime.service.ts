@@ -6,6 +6,7 @@ import { AnimeInfoList } from '../interfaces/AnimeInfoList';
 import { AnimeInfoRequest } from '../interfaces/AnimeInfoRequest';
 import { AnimeDetalle } from '../interfaces/AnimeDetalle';
 import { AnimeLinks } from '../interfaces/AnimeLinks';
+import { ResponseLinks } from '../interfaces/ResponseLinks';
 
 
 @Injectable({
@@ -26,7 +27,7 @@ export class AnimeService {
         return this.http.get<AnimeDetalle>(`${this.baseUrl}/anime/info/${idAnime}`)
      }
 
-     getLinks(objeto: AnimeLinks): Observable<[]> {
-          return this.http.post<[]>(`${this.baseUrl}/anime/links`, objeto)
+     getLinks(objeto: AnimeLinks): Observable<ResponseLinks> {
+          return this.http.post<ResponseLinks>(`${this.baseUrl}/anime/links`, objeto)
      }
 }
