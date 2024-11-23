@@ -99,7 +99,7 @@ export class DetalleComponent implements OnInit {
                },
                error: (err) => {
                     // console.log(err.message);
-                    this.openErrorDialog('Error al registrarse: ' + err.message);
+                    this.openErrorDialog('Error en detalle: ' + err.message);
                }
           })
      }

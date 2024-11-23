@@ -30,4 +30,8 @@ export class AccesoService {
      validarToken(token: string): Observable<ResponseValidateToken> {
           return this.http.get<ResponseValidateToken>(`${this.baseUrl}/auth/validate-token/${token}`)
      }
+
+     refreshToken(token: string): Observable<ResponseAcceso> {
+          return this.http.get<ResponseAcceso>(`${this.baseUrl}/auth/refresh-token/${token}`)
+     }
 }

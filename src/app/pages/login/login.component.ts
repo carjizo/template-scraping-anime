@@ -42,6 +42,7 @@ export class LoginComponent {
                next:(data) =>{
                     if(data.isSucces == true){
                          localStorage.setItem("token",data.token)
+                         localStorage.setItem("refreshToken",data.refreshToken)
                          this.router.navigate(['inicio'])
                     }else{
                          this.openErrorDialog(data.message);
@@ -50,7 +51,7 @@ export class LoginComponent {
                },
                error:(error) =>{
                     // console.log(error.message);
-                    this.openErrorDialog('Error al registrarse: ' + error.message);
+                    this.openErrorDialog('Error en login: ' + error.message);
                }
           })
      }
